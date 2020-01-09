@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+            <title>{{name}}</title>
+    </head>
+
+    <a href="/logout">ログアウトする</a>
+
+    <body>
+        {% if name == "home" %}
+        <h1>Please tell me your idea!</h1>
+        {% elif name %}
+        <h1>Hello, {{name}}! Welcome to Chemical Plant DB!!</h1>
+        {% else %}
+        <h1>Chemical Plant</h1>
+        {% endif %}     
+        
+        <img src="/static/images/chem_plant.jpg" alt="plant">
+
+        <form action="/add" method="post">
+            <input type="text" name="feature" placeholder="feature">
+            <input type="text" name="details" placeholder="details">
+            <p><input type="submit" value="Add"></p>
+        </form>
+        
+        <form action="/update" method="post" id="update">
+            <input type="text" name="feature" placeholder="feature">
+            <input type="text" name="details" placeholder="details">
+            <p><input type="submit" value="Update"></p>
+        </form>
+        
+        <form action="/delete" method="post" id="delete">
+            <input type="submit" value="Delete Selected All Feature">
+        </form>
+
+        <table>
+            <tr>
+                <th>Update</th>
+                <th>Delete</th>
+                <th>Feature Name</th>
+                <th>Details</th>
+                <th>TimeStamp</th>
+            </tr>
+            {% for feature in all_feature %}
+            <tr>
+                <div>
+                    <td><input type="radio" name="update" form="update" value={{feature.id}}></td>
+                    <td><input type="checkbox" name="delete" form="delete" value={{feature.id}}></td>
+                    <td>{{feature.feature}}</td>
+                    <td>{{feature.details}}</td>
+                    <td>{{feature.date}}</td>
+                </div>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </body>
+</html>
